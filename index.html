@@ -1558,7 +1558,8 @@ function schoolResults(){
 	resultString += "</ul>";
 	$('#choose-school-results').html(resultString);
 	$('#choose-school-results').show();
-	$('#debt').show();
+	$('#info').show();
+	$('#info-link').hide();
 }
 
 //http://open.canada.ca/data/en/dataset/b4bdd903-e5dd-4889-8db5-595449d23a52
@@ -1647,7 +1648,7 @@ Helping you find your career
 <div class="section" id="occupation">
 <div class="question"><i class="fa fa-money"></i> How much will I get paid?</div>
 <form id="occupation-form">
-<select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); occupationSelected(); $('#occupation-results').show(); $('#industry').show(); $('#occupation-form').hide(); incrementCompleteBar();">
+<select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); occupationSelected(); $('#occupation-results').show(); $('#industry-form').show(); $('#occupation-form').hide(); incrementCompleteBar();">
 <option>Select Occupation...</option>
 <script>
 totalQuestions++;
@@ -1665,10 +1666,10 @@ for(wage in averageWage){
 </div>
 
 
-<div class="section" id="industry" style="display:none;">
+<div class="section" id="industry">
 <div class="question"><i class="fa fa-building"></i> Are there positions in my industry?</div>
-<form id="industry-form">
-<select id="industry-select" onchange="industryIndex = this.selectedIndex; $('#industry-form').hide(); industrySelected(); industryResults(); $('#find-work').show(); incrementCompleteBar();">
+<form id="industry-form" style="display:none;">
+<select id="industry-select" onchange="industryIndex = this.selectedIndex; $('#industry-form').hide(); industrySelected(); industryResults(); $('#education-form').show(); incrementCompleteBar();">
 <option>Select Industry...</option>
 <script>
 totalQuestions++;
@@ -1683,9 +1684,9 @@ industry.forEach(function (name, i) {
 </div>
 </div>
 
-<div class="section" id="find-work" style="display:none;">
+<div class="section" id="find-work">
 <div class="question"><i class="fa fa-graduation-cap"></i> Will my education help me find work?</div>
-<form id="education-form">
+<form id="education-form" style="display:none;">
 <div class="question">How much schooling will you take?</div>
 <select id="education-select" onchange="educationIndex = this.selectedIndex; $('#education-form').hide(); educationSelected(); $('#sex-form').show(); incrementCompleteBar();">
 <option>Select Education Level...</option>
@@ -1702,7 +1703,7 @@ education_level.forEach(function (level, i) {
 <script>
 totalQuestions++;
 sex.forEach(function (value, i) {
-    document.write(sexIcons[i] + ' ' + value + '<input type="radio" name="sex" onclick="sexIndex = '+i+'; $(\'#sex-form\').hide(); educationResults(); sexSelected(); $(\'#debt\').show(); incrementCompleteBar();">');
+    document.write(sexIcons[i] + ' ' + value + '<input type="radio" name="sex" onclick="sexIndex = '+i+'; $(\'#sex-form\').hide(); educationResults(); sexSelected(); $(\'#debt-form\').show(); incrementCompleteBar();">');
 });
 </script>
 </form>
@@ -1711,10 +1712,10 @@ sex.forEach(function (value, i) {
 </div>
 </div>
 
-<div class="section" id="debt" style="display:none;">
+<div class="section" id="debt">
 <div class="question"><i class="fa fa-usd"></i> How large will my student loan be on graduation?</div>
-<form id="debt-form">
-<select id="debt-select" onchange="$('#debt-results').html('Average debt on completion $' + $('#debt-select').val()); $('#debt-results').show(); $('#choose-school').show(); debtSelected(); $('#debt-form').hide(); incrementCompleteBar();">
+<form id="debt-form" style="display:none;">
+<select id="debt-select" onchange="$('#debt-results').html('Average debt on completion $' + $('#debt-select').val()); $('#debt-results').show(); $('#choose-school-province-form').show(); debtSelected(); $('#debt-form').hide(); incrementCompleteBar();">
 <script>
 totalQuestions++;
 </script>
@@ -1729,9 +1730,9 @@ totalQuestions++;
 </div>
 </div>
 
-<div class="section" id="choose-school" style="display:none;">
+<div class="section" id="choose-school">
 <div class="question"><i class="fa fa-map-marker"></i> Where can I going to school?</div>
-<form id="choose-school-province-form">
+<form id="choose-school-province-form" style="display:none;">
 <select id="province-select" onchange="provinceIndex = $('#province-select').val(); $('#choose-school-province-form').hide(); provinceSelected(); populateSchoolCity(); $('#choose-school-city-form').show(); incrementCompleteBar();">
 <option>Select Province/Territory...</option>
 <script>
