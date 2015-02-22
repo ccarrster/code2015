@@ -80,16 +80,34 @@ var education_data = [[[28, 18.4], [62.7, 30.4], [22.1, 9.4]],
 
 var sexIndex;
 var educationIndex;
+var educationData;
 
 function educationResults(){
 	var ageData = education_data[educationIndex];
-	var resultString = "<table><tr><td>Age</td><td>Employment Rate</td></tr>";
+	educationData = [];
 	ageData.forEach(function (value, i) {
-	    resultString += '<tr><td>' + education_ages[i] + "</td><td>" + value[sexIndex] + '%</td></tr>';
+	    educationData.push(value[sexIndex]);
 	});
-	resultString += "</table>"
-	$('#education-results').html(resultString);
 	$('#education-results').show();
+	$('#myChart').show();
+	var ctx = document.getElementById("myChart").getContext("2d");
+	var data = {
+	    labels: education_ages,
+	    datasets: [
+	        {
+	            label: "Percent Employed",
+	            fillColor: "rgba(220,220,220,0.2)",
+	            strokeColor: "rgba(220,220,220,1)",
+	            pointColor: "rgba(220,220,220,1)",
+	            pointStrokeColor: "#fff",
+	            pointHighlightFill: "#fff",
+	            pointHighlightStroke: "rgba(220,220,220,1)",
+	            data: educationData
+	        }
+	    ]
+	};
+	var myLineChart = new Chart(ctx).Line(data);
+	$('#education-results').html('Percent Employment Rate per Age Group');
 	$('#industry').show();
 }
 
@@ -501,9 +519,6 @@ var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.c
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=10330&details=general",
 "Centre for Distance Education ",
 "Sydney, Nova Scotia"],
-["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=166&details=general",
-"Centre for Nursing Studies ",
-"St. John's, Newfoundland and Labrador"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=165&details=general",
 "Champlain Regional College ",
 "Sherbrooke, Québec"],
@@ -861,9 +876,6 @@ var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.c
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=70&details=general",
 "Keyano College ",
 "Fort McMurray, Alberta"],
-["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=557&details=general",
-"Keyin College ",
-"St. John's, Newfoundland and Labrador"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=10285&details=general",
 "Kikkawa College ",
 "Toronto, Ontario"],
@@ -903,9 +915,6 @@ var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.c
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=280&details=general",
 "Laurentian University of Sudbury ",
 "Sudbury, Ontario"],
-["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=10307&details=general",
-"LeMoine's School of Hair Design ",
-"St. John's, Newfoundland and Labrador"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=72&details=general",
 "Lethbridge College ",
 "Lethbridge, Alberta"],
@@ -990,9 +999,6 @@ var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.c
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=506&details=general",
 "Medix School ",
 "London, Ontario"],
-["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=33&details=general",
-"Memorial University of Newfoundland ",
-"St. John's, Newfoundland and Labrador"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=144&details=general",
 "Michener Institute of Applied Health Sciences ",
 "Toronto, Ontario"],
@@ -1746,7 +1752,8 @@ sex.forEach(function (value, i) {
 </script>
 </form>
 <div id="sex-selection" class="selection"></div>
-<div id="education-results" style="display:none;" class="results">
+<canvas id="myChart" width="500" height="250" style="display:none;"></canvas>
+<div id="education-results" style="display:none; text-align: center;" class="results">
 </div>
 </div>
 
