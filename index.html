@@ -36,7 +36,7 @@ body {
 
 .header {
 	margin: 5px;
-	width: 500px;
+	width: 530px;
 	text-align: center;
 }
 
@@ -80,7 +80,7 @@ function educationResults(){
 	var ageData = education_data[educationIndex];
 	var resultString = "<table><tr><td>Age</td><td>Employment Rate</td></tr>";
 	ageData.forEach(function (value, i) {
-	    resultString += '<tr><td>' + education_ages[i] + "</td><td>" + value[sexIndex] + '</td></tr>';
+	    resultString += '<tr><td>' + education_ages[i] + "</td><td>" + value[sexIndex] + '%</td></tr>';
 	});
 	resultString += "</table>"
 	$('#education-results').html(resultString);
@@ -139,7 +139,7 @@ var industryTotal = "15160024";
 var industryIndex;
 
 function industryResults(){
-	var resultString = 'Percent of jobs in ' + industry[industryIndex] + ": %" + (industryData[industryIndex] / industryTotal * 100).toFixed(2);
+	var resultString = 'Percent of jobs in ' + industry[industryIndex] + ": " + (industryData[industryIndex] / industryTotal * 100).toFixed(2) + "%";
 	$('#industry-results').html(resultString);
 	$('#industry-results').show();
 }
@@ -1547,10 +1547,11 @@ function populateSchoolCity(){
 
 function schoolResults(){
 	var citySchools = schoolHash[provinceIndex][cityIndex];
-	var resultString = "";
+	var resultString = "<ul>";
 	for(school in citySchools) {
-		resultString += '<div><a target="_blank" href="' + citySchools[school].url + '">'+citySchools[school].name+'</a></div>';
+		resultString += '<li><a target="_blank" href="' + citySchools[school].url + '">'+citySchools[school].name+'</a>';
 	}
+	resultString += "</ul>";
 	$('#choose-school-results').html(resultString);
 	$('#choose-school-results').show();
 	$('#debt').show();
@@ -1581,46 +1582,48 @@ var answeredQuestions = 0;
 function incrementCompleteBar(){
 	answeredQuestions++;
 	var completeText = answeredQuestions / totalQuestions * 100;
-	$('#complete-text').html(completeText.toFixed(2) + "%");
+	$('#complete-text').html(completeText.toFixed(0) + "%");
 	$('#complete-bar').width(completeText  + "%");
 }
 
 function occupationSelected() {
 	var occupationText = $('#occupation-select :selected').text();
-	$('#occupation-selection').html('<i class="fa fa-arrow-right"></i> '+occupationText);
+	$('#occupation-selection').html('Occupation <i class="fa fa-arrow-right"></i> '+occupationText);
 }
 
 function industrySelected() {
 	var text = $('#industry-select :selected').text();
-	$('#industry-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#industry-selection').html('Industry <i class="fa fa-arrow-right"></i> '+text);
 }
 
 function educationSelected() {
 	var text = $('#education-select :selected').text();
-	$('#education-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#education-selection').html('Education <i class="fa fa-arrow-right"></i> '+text);
 }
 
 function sexSelected() {
 	var text = sex[sexIndex];
-	$('#sex-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#sex-selection').html('Gender <i class="fa fa-arrow-right"></i> '+text);
 }
 
 function debtSelected() {
 	var text = $('#debt-select :selected').text();
-	$('#debt-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#debt-selection').html('School Type <i class="fa fa-arrow-right"></i> '+text);
 }
 
 function provinceSelected() {
 	var text = $('#province-select :selected').text();
-	$('#province-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#province-selection').html('Province/Territory <i class="fa fa-arrow-right"></i> '+text);
 }
 
 function citySelected() {
 	var text = $('#city-select :selected').text();
-	$('#city-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+	$('#city-selection').html('City <i class="fa fa-arrow-right"></i> '+text);
 }
 
 </script>
+<body>
+<div style="width:530px; margin: 0 auto;">
 <div class="header">
 <div class="title">
 <div><span class="codered">P</span>ATH<span class="codered">F</span>INDER</div>
@@ -1750,40 +1753,27 @@ totalQuestions++;
 </div>
 </div>
 
-<div class="header">
-<a href="index.html"><i class="fa fa-undo"></i> Start another path</a>
-
-<div><img src="code_logo.png"></div>
-<div class="title">
+<div class="header" style="margin-top: 20px;">
+<a href="index.html"><i class="fa fa-undo"></i> Reset</a>
+<a href="https://www.canadianopendataexperience.ca">
+<div><img style="width:80px; margin-top:30px;" src="code_logo.png"></div>
+</a>
+<div class="heading">
 <span class="codered">C</span>ANADIAN <span class="codered">O</span>PEN <span class="codered">D</span>ATA <span class="codered">E</span>XPERIENCE 2015
 </div>
-<div><img src="canada-logo.png"></div>
+<div><img style="height: 70px;" src="canada-logo.png"></div>
 <div class="info">
 <div>Team: Open Book</div>
 <div>Theme: Youth Employment</div>
 <div>Datasets:</div>
-<div>open.canada.ca: People employed, by educational attainment</div>
-<div>open.canada.ca: Employment, by enterprise size (All sizes)</div>
-<div>open.canada.ca: Average Loan Balance at Completion of Studies by Institution Type</div>
-<div>open.canada.ca: Average hourly wages of employees by selected characteristics and occupation, unadjusted data, by province (monthly) (Canada)</div>
-<div>canlearn: CEGEPs, Colleges & Universities Search</div>
-
-<div>Technoligies</div>
-<div>Github</div>
-<div>FontAwesome</div>
-<div>jQuery</div>
-<div>Apache Webserver</div>
-<div>HTML</div>
-<div>JavaScript</div>
-<div>CSS</div>
-
-<div>
-Scoring:
-User Experience,
-Use of Open Data(Multiple datasets, federal and others),
-Innovation,
-Potential,
-Functionality
+<ul>
+<li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/d635ff7d-0512-475c-8233-d19faa36d4f4">People employed, by educational attainment</a>
+<li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/f0e96fb0-f995-4c72-87b3-01dfd8891bd4">Employment, by enterprise size (All sizes)</a>
+<li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/b4bdd903-e5dd-4889-8db5-595449d23a52">Average Loan Balance at Completion of Studies by Institution Type</a>
+<li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/59ae43db-2182-4198-823c-cee5af945af4">Average hourly wages of employees by selected characteristics and occupation, unadjusted data, by province (monthly) (Canada)</a>
+<li><a target="_blank" href="http://www.canlearn.ca/">canlearn</a>: <a target="_blank" href="http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.clsea-eng.do">CEGEPs, Colleges & Universities Search</a>
+</div>
+<div><a href="mailto:ccarrster@gmail.com">ccarrster@gmail.com</div>
 </div>
 </div>
 </div>
