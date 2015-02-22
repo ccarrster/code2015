@@ -92,6 +92,8 @@ function industryResults(){
 }
 
 //**Schools
+//http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.clsea-eng.do
+//CEGEPs, Colleges & Universities Search
 
 var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=10321&details=general",
 "Academy of Professional Hair Design ",
@@ -1498,7 +1500,11 @@ function schoolResults(){
 	}
 	$('#choose-school-results').html(resultString);
 	$('#choose-school-results').show();
+	$('#debt').show();
 }
+
+//http://open.canada.ca/data/en/dataset/b4bdd903-e5dd-4889-8db5-595449d23a52
+//Average Loan Balance at Completion of Studies by Institution Type
 
 //**Complete bar
 
@@ -1512,8 +1518,6 @@ function incrementCompleteBar(){
 	$('#complete-bar').width(completeText);
 }
 
-
-
 </script>
 
 Event: CODE 2015
@@ -1521,8 +1525,10 @@ Team: Open Book
 App: Pathfinder
 Theme: Youth Employment
 Datasets:
-<div>People employed, by educational attainment</div>
-<div>Employment, by enterprise size (All sizes)</div>
+<div>open.canada.ca: People employed, by educational attainment</div>
+<div>open.canada.ca: Employment, by enterprise size (All sizes)</div>
+<div>open.canada.ca: Average Loan Balance at Completion of Studies by Institution Type</div>
+<div>canlearn: CEGEPs, Colleges & Universities Search</div>
 <p>
 Find your future with Pathfinder: When I grow up ...
 </p>
@@ -1591,6 +1597,22 @@ totalQuestions++;
 </div>
 </div>
 
+<div id="debt" style="display:none;">
+<div>Which type of school?</div>
+<form id="debt-form">
+<select id="debt-select" onchange="$('#debt-results').html('Average debt on completion $' + $('#debt-select').val()); $('#debt-results').show(); $('#debt-form').hide(); incrementCompleteBar();">
+<script>
+totalQuestions++;
+</script>
+<option>School Type</option>
+<option value="15,548">University</option>
+<option value="9,143">College</option>
+<option value="10,635">Private Institution</option>
+</select>
+</form>
+<div id="debt-results" style="display:none;">
+</div>
+</div>
 
 <div id="tuition" style="display:none;">
 <div>How much will education cost me?</div>
