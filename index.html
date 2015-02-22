@@ -1,14 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Open Book: Pathfinder - CODE 2015</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <script src="jquery-1.11.2.js"></script>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	color: #515151;
+}
+.codered {
+	color: #e04f4f;
+}
+.title {
+	font-size: 44px;
+}
+.heading {
+	font-size: 23px;
+}
+
+.question {
+	font-size: 23px;
+}
+
+.selection {
+	color: #ff7d55;
+}
+
+.section {
+	border: 1px solid #515151;
+	padding: 15px;
+	margin: 5px;
+	width: 500px;
+}
+
+.header {
+	margin: 5px;
+	width: 500px;
+	text-align: center;
+}
+
+.results {
+	font-size: 23px;
+	color: #e04f4f;
+}
+
+#education-results td {
+	text-align: center;
+}
+
+.info {
+	text-align: left;
+}
+
+</style>
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
-<body>
+<body onload="incrementCompleteBar();">
 <script>
 //http://open.canada.ca/data/en/dataset/d635ff7d-0512-475c-8233-d19faa36d4f4
 //People employed, by educational attainment
 
 var sex = ["Male", "Female"];
+var sexIcons = ['<i class="fa fa-mars"></i>', '<i class="fa fa-venus"></i>']
 var education_level = ["Less than Grade 9", "Some secondary school", "High school graduate", "Some postsecondary", "Postsecondary certificate or diploma", "Bachelor's degree", "Above bachelor's degree"];
 var education_ages = ["15 to 24 years", "25 to 44 years", "45 and over"];
 var education_data = [[[28, 18.4], [62.7, 30.4], [22.1, 9.4]],
@@ -85,10 +139,9 @@ var industryTotal = "15160024";
 var industryIndex;
 
 function industryResults(){
-	var resultString = 'Percent of jobs in ' + industry[industryIndex] + ": %" + industryData[industryIndex] / industryTotal * 100;
+	var resultString = 'Percent of jobs in ' + industry[industryIndex] + ": %" + (industryData[industryIndex] / industryTotal * 100).toFixed(2);
 	$('#industry-results').html(resultString);
 	$('#industry-results').show();
-	$('#choose-school').show();
 }
 
 //**Schools
@@ -1483,7 +1536,7 @@ var cityIndex;
 
 function populateSchoolCity(){
 	$result = '';
-	$result += '<select id="city-select" onchange="cityIndex = $(\'#city-select\').val(); $(\'#choose-school-city-form\').hide(); schoolResults(); incrementCompleteBar();">';
+	$result += '<select id="city-select" onchange="cityIndex = $(\'#city-select\').val(); $(\'#choose-school-city-form\').hide(); schoolResults(); citySelected(); incrementCompleteBar();">';
 	$result += "<option>Choose a city</option>";
 	$.each(schoolHash[provinceIndex], function(city) {
 		$result += "<option value='"+city+"'>"+city+"</option>";
@@ -1506,62 +1559,113 @@ function schoolResults(){
 //http://open.canada.ca/data/en/dataset/b4bdd903-e5dd-4889-8db5-595449d23a52
 //Average Loan Balance at Completion of Studies by Institution Type
 
+//http://open.canada.ca/data/en/dataset/59ae43db-2182-4198-823c-cee5af945af4
+//Average hourly wages of employees by selected characteristics and occupation, unadjusted data, by province (monthly) (Canada)
+
+var averageWage = [["Management occupations", "40.04"],
+["Business, finance and administrative occupations", "24.16"],
+["Natural and applied sciences and related occupations", "34.51"],
+["Health occupations", "128.69"],
+["Occupations in social science, education, government service and religion", "31.25"],
+["Occupations in art, culture, recreation and sport", "26.09"],
+["Sales and service occupations", "16.7"],
+["Trades, transport and equipment operators and related occupations", "24.91"],
+["Occupations unique to primary industry", "23.27"],
+["Occupations unique to processing, manufacturing and utilities", "21.12"]];
+
 //**Complete bar
 
-var totalQuestions = 0;
+var totalQuestions = 1;
 var answeredQuestions = 0;
 
 function incrementCompleteBar(){
 	answeredQuestions++;
-	var completeText = answeredQuestions / totalQuestions * 100 + "%";
-	$('#complete-text').html(completeText);
-	$('#complete-bar').width(completeText);
+	var completeText = answeredQuestions / totalQuestions * 100;
+	$('#complete-text').html(completeText.toFixed(2) + "%");
+	$('#complete-bar').width(completeText  + "%");
+}
+
+function occupationSelected() {
+	var occupationText = $('#occupation-select :selected').text();
+	$('#occupation-selection').html('<i class="fa fa-arrow-right"></i> '+occupationText);
+}
+
+function industrySelected() {
+	var text = $('#industry-select :selected').text();
+	$('#industry-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+}
+
+function educationSelected() {
+	var text = $('#education-select :selected').text();
+	$('#education-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+}
+
+function sexSelected() {
+	var text = sex[sexIndex];
+	$('#sex-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+}
+
+function debtSelected() {
+	var text = $('#debt-select :selected').text();
+	$('#debt-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+}
+
+function provinceSelected() {
+	var text = $('#province-select :selected').text();
+	$('#province-selection').html('<i class="fa fa-arrow-right"></i> '+text);
+}
+
+function citySelected() {
+	var text = $('#city-select :selected').text();
+	$('#city-selection').html('<i class="fa fa-arrow-right"></i> '+text);
 }
 
 </script>
+<div class="header">
+<div class="title">
+<div><span class="codered">P</span>ATH<span class="codered">F</span>INDER</div>
+</div>
+<div class="heading">
+Helping you find your career
+</div>
 
-Event: CODE 2015
-Team: Open Book
-App: Pathfinder
-Theme: Youth Employment
-Datasets:
-<div>open.canada.ca: People employed, by educational attainment</div>
-<div>open.canada.ca: Employment, by enterprise size (All sizes)</div>
-<div>open.canada.ca: Average Loan Balance at Completion of Studies by Institution Type</div>
-<div>canlearn: CEGEPs, Colleges & Universities Search</div>
+<div id="complete">
+	<div>Percent Complete: <span id="complete-text">0%</span></div>
+	<div style="border: solid 1px #515151; width: 530px; height: 25px;">
+		<div id="complete-bar" style="background-color: #ff7d55; height: 25px; width: 0px;"></div>
+	</div>
+</div>
+
 <p>
-Find your future with Pathfinder: When I grow up ...
+When I grow up...
 </p>
-<div id="find-work">
-<div>Will I find work?</div>
-<form id="sex-form">
-Which gender you do identify with?
+</div>
+<div class="section" id="occupation">
+<div class="question"><i class="fa fa-money"></i> How much will I get paid?</div>
+<form id="occupation-form">
+<select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); occupationSelected(); $('#occupation-results').show(); $('#industry').show(); $('#occupation-form').hide(); incrementCompleteBar();">
+<option>Occupation</option>
 <script>
 totalQuestions++;
-sex.forEach(function (value, i) {
-    document.write(value + '<input type="radio" name="sex" onclick="sexIndex = '+i+'; $(\'#sex-form\').hide(); $(\'#education-form\').show(); incrementCompleteBar();">');
-});
-</script>
-</form>
-<form id="education-form" style="display:none;">
-How much schooling will you take?
-<select name="education" onchange="educationIndex = this.selectedIndex; $('#education-form').hide(); educationResults(); incrementCompleteBar();">
-<script>
-totalQuestions++;
-education_level.forEach(function (level, i) {
-	document.write('<option value="'+i+'">'+level+'</option>');
-});
+for(wage in averageWage){
+	var occupation = averageWage[wage][0];
+	var avgWage = averageWage[wage][1];
+	document.write('<option value="'+avgWage+'">'+occupation+'</option>');
+}
 </script>
 </select>
 </form>
-<div id="education-results" style="display:none;">
+<div id="occupation-selection" class="selection"></div>
+<div id="occupation-results" style="display:none;" class="results">
 </div>
 </div>
 
-<div id="industry" style="display:none;">
-<div>Which industry should I target?</div>
+
+<div class="section" id="industry" style="display:none;">
+<div class="question"><i class="fa fa-building"></i> Are there positions in my industry?</div>
 <form id="industry-form">
-<select onchange="industryIndex = this.selectedIndex; $('#industry-form').hide(); industryResults(); incrementCompleteBar();">
+<select id="industry-select" onchange="industryIndex = this.selectedIndex; $('#industry-form').hide(); industrySelected(); industryResults(); $('#find-work').show(); incrementCompleteBar();">
+<option>Industry</option>
 <script>
 totalQuestions++;
 industry.forEach(function (name, i) {
@@ -1570,37 +1674,43 @@ industry.forEach(function (name, i) {
 </script>
 </select>
 </form>
-<div id="industry-results" style="display:none;">
+<div id="industry-selection" class="selection"></div>
+<div id="industry-results" style="display:none;" class="results">
 </div>
 </div>
 
-<div id="choose-school" style="display:none;">
-<div>Where am I going to school?</div>
-<form id="choose-school-province-form">
-<select id="province-select" onchange="provinceIndex = $('#province-select').val(); $('#choose-school-province-form').hide(); populateSchoolCity(); $('#choose-school-city-form').show(); incrementCompleteBar();">
-<option>Choose a province</option>
+<div class="section" id="find-work" style="display:none;">
+<div class="question"><i class="fa fa-graduation-cap"></i> Will my education help me find work?</div>
+<form id="education-form">
+<div class="question">How much schooling will you take?</div>
+<select id="education-select" onchange="educationIndex = this.selectedIndex; $('#education-form').hide(); educationSelected(); $('#sex-form').show(); incrementCompleteBar();">
+<option>Education level</option>
 <script>
 totalQuestions++;
-$.each(schoolHash, function( province) {
-	document.write('<option value="'+province+'">'+province+'</option>');
+education_level.forEach(function (level, i) {
+	document.write('<option value="'+i+'">'+level+'</option>');
 });
 </script>
 </select>
 </form>
+<div id="education-selection" class="selection"></div>
+<form id="sex-form" style="display:none;">
 <script>
 totalQuestions++;
+sex.forEach(function (value, i) {
+    document.write(sexIcons[i] + ' ' + value + '<input type="radio" name="sex" onclick="sexIndex = '+i+'; $(\'#sex-form\').hide(); educationResults(); sexSelected(); $(\'#debt\').show(); incrementCompleteBar();">');
+});
 </script>
-<form id="choose-school-city-form">
-
 </form>
-<div id="choose-school-results" style="display:none;">
+<div id="sex-selection" class="selection"></div>
+<div id="education-results" style="display:none;" class="results">
 </div>
 </div>
 
-<div id="debt" style="display:none;">
-<div>Which type of school?</div>
+<div class="section" id="debt" style="display:none;">
+<div class="question"><i class="fa fa-usd"></i> How large will my student loan be on graduation?</div>
 <form id="debt-form">
-<select id="debt-select" onchange="$('#debt-results').html('Average debt on completion $' + $('#debt-select').val()); $('#debt-results').show(); $('#debt-form').hide(); incrementCompleteBar();">
+<select id="debt-select" onchange="$('#debt-results').html('Average debt on completion $' + $('#debt-select').val()); $('#debt-results').show(); $('#choose-school').show(); debtSelected(); $('#debt-form').hide(); incrementCompleteBar();">
 <script>
 totalQuestions++;
 </script>
@@ -1610,23 +1720,62 @@ totalQuestions++;
 <option value="10,635">Private Institution</option>
 </select>
 </form>
-<div id="debt-results" style="display:none;">
+<div id="debt-selection" class="selection"></div>
+<div id="debt-results" style="display:none;" class="results">
 </div>
 </div>
 
-<div id="tuition" style="display:none;">
-<div>How much will education cost me?</div>
+<div class="section" id="choose-school" style="display:none;">
+<div class="question"><i class="fa fa-map-marker"></i> Where can I going to school?</div>
+<form id="choose-school-province-form">
+<select id="province-select" onchange="provinceIndex = $('#province-select').val(); $('#choose-school-province-form').hide(); provinceSelected(); populateSchoolCity(); $('#choose-school-city-form').show(); incrementCompleteBar();">
+<option>Choose a province</option>
+<script>
+totalQuestions++;
+$.each(schoolHash, function( province) {
+	document.write('<option value="'+province+'">'+province+'</option>');
+});
+</script>
+</select>
+</form>
+<div id="province-selection" class="selection"></div>
+<script>
+totalQuestions++;
+</script>
+<form id="choose-school-city-form">
+
+</form>
+<div id="city-selection" class="selection"></div>
+<div id="choose-school-results" style="display:none;" class="results">
+</div>
 </div>
 
-<div id="complete">
-<div>Percent Complete: <span id="complete-text">0%</span></div>
-<div style="border: solid 1px black; width: 500px; height: 50px;">
-<div id="complete-bar" style="background-color: green; height: 50px; width: 0px;">
-</div>
-</div>
-</div>
+<div class="header">
+<a href="index.html"><i class="fa fa-undo"></i> Start another path</a>
 
-<a href="index.html">Start another path</a>
+<div><img src="code_logo.png"></div>
+<div class="title">
+<span class="codered">C</span>ANADIAN <span class="codered">O</span>PEN <span class="codered">D</span>ATA <span class="codered">E</span>XPERIENCE 2015
+</div>
+<div><img src="canada-logo.png"></div>
+<div class="info">
+<div>Team: Open Book</div>
+<div>Theme: Youth Employment</div>
+<div>Datasets:</div>
+<div>open.canada.ca: People employed, by educational attainment</div>
+<div>open.canada.ca: Employment, by enterprise size (All sizes)</div>
+<div>open.canada.ca: Average Loan Balance at Completion of Studies by Institution Type</div>
+<div>open.canada.ca: Average hourly wages of employees by selected characteristics and occupation, unadjusted data, by province (monthly) (Canada)</div>
+<div>canlearn: CEGEPs, Colleges & Universities Search</div>
+
+<div>Technoligies</div>
+<div>Github</div>
+<div>FontAwesome</div>
+<div>jQuery</div>
+<div>Apache Webserver</div>
+<div>HTML</div>
+<div>JavaScript</div>
+<div>CSS</div>
 
 <div>
 Scoring:
@@ -1636,7 +1785,7 @@ Innovation,
 Potential,
 Functionality
 </div>
-
-
+</div>
+</div>
 </body>
 </html>
