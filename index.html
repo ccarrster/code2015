@@ -1688,12 +1688,12 @@ Helping you find your career
 		<div id="complete-bar" style="background-color: #ff7d55; height: 25px; width: 0px;"></div>
 	</div>
 </div>
-<div id="reset-top" style="display:none; margin-top: 10px;"><a href="index.html"><i class="fa fa-undo"></i> Reset</a></div>
+<div class="reset" style="display:none; margin-top: 10px;"><a href="index.html"><i class="fa fa-undo"></i> Reset</a></div>
 </div>
 <div class="section" id="occupation">
 <div class="question"><i class="fa fa-money"></i> How much will I get paid?</div>
 <form id="occupation-form">
-<select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); $('#reset-top').show(); occupationSelected(); $('#occupation-results').show(); $('#industry-form').show(); $('#occupation-form').hide(); incrementCompleteBar();">
+<select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); $('.reset').show(); occupationSelected(); $('#occupation-results').show(); $('#industry-form').show(); $('#occupation-form').hide(); incrementCompleteBar();">
 <option>Select Occupation...</option>
 <script>
 totalQuestions++;
@@ -1777,7 +1777,7 @@ totalQuestions++;
 </div>
 
 <div class="section" id="choose-school">
-<div class="question"><i class="fa fa-map-marker"></i> Where can I going to school?</div>
+<div class="question"><i class="fa fa-map-marker"></i> Where can I go to school?</div>
 <form id="choose-school-province-form" style="display:none;">
 <select id="province-select" onchange="provinceIndex = $('#province-select').val(); $('#choose-school-province-form').hide(); provinceSelected(); populateSchoolCity(); $('#choose-school-city-form').show(); incrementCompleteBar();">
 <option>Select Province/Territory...</option>
@@ -1802,7 +1802,7 @@ totalQuestions++;
 </div>
 </div>
 <div class="header" style="margin-top: 20px;">
-<a href="index.html"><i class="fa fa-undo"></i> Reset</a>
+<div class="reset" style="display:none;"><a href="index.html"><i class="fa fa-undo"></i> Reset</a></div>
 </div>
 <div id="info-link" onclick="$('#info').show(); $('#info-link').hide();">Show Info</div>
 <div id="info" class="header" style="margin-top: 20px; display:none;">
