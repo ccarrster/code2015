@@ -53,6 +53,10 @@ body {
 	text-align: left;
 }
 
+a {
+	color: #e04f4f;
+}
+
 </style>
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
@@ -1537,7 +1541,7 @@ var cityIndex;
 function populateSchoolCity(){
 	$result = '';
 	$result += '<select id="city-select" onchange="cityIndex = $(\'#city-select\').val(); $(\'#choose-school-city-form\').hide(); schoolResults(); citySelected(); incrementCompleteBar();">';
-	$result += "<option>Choose a city</option>";
+	$result += "<option>Select City...</option>";
 	$.each(schoolHash[provinceIndex], function(city) {
 		$result += "<option value='"+city+"'>"+city+"</option>";
 	});
@@ -1647,7 +1651,7 @@ When I grow up...
 <div class="question"><i class="fa fa-money"></i> How much will I get paid?</div>
 <form id="occupation-form">
 <select id="occupation-select" onchange="$('#occupation-results').html('Average hourly wage $' + $('#occupation-select').val()); occupationSelected(); $('#occupation-results').show(); $('#industry').show(); $('#occupation-form').hide(); incrementCompleteBar();">
-<option>Occupation</option>
+<option>Select Occupation...</option>
 <script>
 totalQuestions++;
 for(wage in averageWage){
@@ -1668,7 +1672,7 @@ for(wage in averageWage){
 <div class="question"><i class="fa fa-building"></i> Are there positions in my industry?</div>
 <form id="industry-form">
 <select id="industry-select" onchange="industryIndex = this.selectedIndex; $('#industry-form').hide(); industrySelected(); industryResults(); $('#find-work').show(); incrementCompleteBar();">
-<option>Industry</option>
+<option>Select Industry...</option>
 <script>
 totalQuestions++;
 industry.forEach(function (name, i) {
@@ -1687,7 +1691,7 @@ industry.forEach(function (name, i) {
 <form id="education-form">
 <div class="question">How much schooling will you take?</div>
 <select id="education-select" onchange="educationIndex = this.selectedIndex; $('#education-form').hide(); educationSelected(); $('#sex-form').show(); incrementCompleteBar();">
-<option>Education level</option>
+<option>Select Education Level...</option>
 <script>
 totalQuestions++;
 education_level.forEach(function (level, i) {
@@ -1717,7 +1721,7 @@ sex.forEach(function (value, i) {
 <script>
 totalQuestions++;
 </script>
-<option>School Type</option>
+<option>Select School Type...</option>
 <option value="15,548">University</option>
 <option value="9,143">College</option>
 <option value="10,635">Private Institution</option>
@@ -1732,7 +1736,7 @@ totalQuestions++;
 <div class="question"><i class="fa fa-map-marker"></i> Where can I going to school?</div>
 <form id="choose-school-province-form">
 <select id="province-select" onchange="provinceIndex = $('#province-select').val(); $('#choose-school-province-form').hide(); provinceSelected(); populateSchoolCity(); $('#choose-school-city-form').show(); incrementCompleteBar();">
-<option>Choose a province</option>
+<option>Select Province/Territory...</option>
 <script>
 totalQuestions++;
 $.each(schoolHash, function( province) {
@@ -1752,9 +1756,11 @@ totalQuestions++;
 <div id="choose-school-results" style="display:none;" class="results">
 </div>
 </div>
-
 <div class="header" style="margin-top: 20px;">
 <a href="index.html"><i class="fa fa-undo"></i> Reset</a>
+</div>
+<div id="info-link" onclick="$('#info').show(); $('#info-link').hide();">Show Info</div>
+<div id="info" class="header" style="margin-top: 20px; display:none;">
 <a href="https://www.canadianopendataexperience.ca">
 <div><img style="width:80px; margin-top:30px;" src="code_logo.png"></div>
 </a>
