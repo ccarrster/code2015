@@ -412,7 +412,7 @@ var schools = [["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.c
 "Lévis, Québec"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=183&details=general",
 "Cégep de l'Outaouais ",
-"Gatineau, secteur Hull, Québec"],
+"Gatineau, Québec"],
 ["http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.cldet.do?institution_id=default&searchType=ALL&searchString=&instLang=A&instType=B&start=0&finish=19&section=1&instID=289&details=general",
 "Cégep de Matane ",
 "Matane, Québec"],
@@ -1547,6 +1547,19 @@ function populateSchoolCity(){
 	});
 	$result += '</select>';
 	$('#choose-school-city-form').html($result);
+
+	if(graduates[provinceIndex]){
+		numGrads = 0;
+		if($('#debt-select :selected').text() == 'College'){
+			numGrads = graduates[provinceIndex][1];
+		}
+		if($('#debt-select :selected').text() == 'University'){
+			numGrads = graduates[provinceIndex][0];
+		}
+		if(numGrads != 0){
+			$('#choose-province-results').html('Last year there were ' + numGrads + ' ' + $('#debt-select :selected').text() + ' graduates from ' + provinceIndex);
+		}
+	}
 }
 
 function schoolResults(){
@@ -1578,6 +1591,22 @@ var averageWage = [["Management occupations", "40.04"],
 ["Trades, transport and equipment operators and related occupations", "24.91"],
 ["Occupations unique to primary industry", "23.27"],
 ["Occupations unique to processing, manufacturing and utilities", "21.12"]];
+
+//http://open.canada.ca/data/en/dataset/a9559316-c106-43bd-8937-4b76983b65cb
+//**Postsecondary graduates by institution type, province and sex (Both sexes)
+//province, university, college
+
+var graduates = [];
+graduates["Newfoundland and Labrador"] = [3555,	2925],
+graduates["Prince Edward Island"] = [912, 1350],
+graduates["Nova Scotia"] = [9873, 4935],
+graduates["New Brunswick"] = [4890, 3561],
+graduates["Québec"] = [72456, 54621],
+graduates["Ontario"] = [108912, 84261],
+graduates["Manitoba"] = [7353, 4794],
+graduates["Saskatchewan"] = [5613, 3417],
+graduates["Alberta"] = [24027, 17310],
+graduates["British Columbia"] = [38199, 25422];
 
 //**Complete bar
 
@@ -1744,6 +1773,7 @@ $.each(schoolHash, function( province) {
 </select>
 </form>
 <div id="province-selection" class="selection"></div>
+<div id="choose-province-results" class="results"></div>
 <script>
 totalQuestions++;
 </script>
@@ -1775,6 +1805,8 @@ totalQuestions++;
 <li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/f0e96fb0-f995-4c72-87b3-01dfd8891bd4">Employment, by enterprise size (All sizes)</a>
 <li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/b4bdd903-e5dd-4889-8db5-595449d23a52">Average Loan Balance at Completion of Studies by Institution Type</a>
 <li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/59ae43db-2182-4198-823c-cee5af945af4">Average hourly wages of employees by selected characteristics and occupation, unadjusted data, by province (monthly) (Canada)</a>
+<li><a target="_blank" href="http://open.canada.ca/">open.canada.ca</a>: <a target="_blank" href="http://open.canada.ca/data/en/dataset/a9559316-c106-43bd-8937-4b76983b65cb">Postsecondary graduates by institution type, province and sex (Both sexes)</a>
+
 <li><a target="_blank" href="http://www.canlearn.ca/">canlearn</a>: <a target="_blank" href="http://tools.canlearn.ca/cslgs-scpse/cln-cln/rep-fit/cu/af.cu.clsea-eng.do">CEGEPs, Colleges & Universities Search</a>
 </div>
 <div><a href="mailto:ccarrster@gmail.com">ccarrster@gmail.com</div>
